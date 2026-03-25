@@ -47,15 +47,16 @@ Virtual Tsukuba Challenge (VTC) を ROS2 から使うための bridge / bringup 
 
 - `plan.md` を作成済み
 - 公開ROS1 APIの棚卸し初版を作成済み
-- ROS2 package の雛形は未作成
+- `vtc_msgs` / `vtc_bridge` / `vtc_bringup` / `vtc_tools` の雛形を作成済み
+- `vtc_bridge` には mock backend と conditional な `cageclient` backend を実装済み
 - simulator 実機接続確認は未実施
 
 ## Near-Term Tasks
 
-1. `vtc_msgs`, `vtc_bridge`, `vtc_bringup`, `vtc_tools` の雛形を作る
+1. `transport_backend:=cageclient` を実環境で有効化して packaged VTC と接続確認する
 2. ROS1 I/F と ROS2 I/F の対応を固定する
-3. 最小bridgeで `cmd_vel -> setVW`, `getStatusOne -> odom/tf` を実装する
-4. LiDAR path を packaged binary で再確認する
+3. LiDAR path を packaged binary で再確認する
+4. `vtc_msgs` に control service 定義を追加する
 
 ## Proposed Layout
 
@@ -72,9 +73,35 @@ virtual_tukuba_challenge_v2_ws/
 
 ## Quickstart
 
-まだ quickstart を提供できる段階ではありません。
+最小雛形の build と起動だけなら可能です。
 
-現時点では、以下を前提に進めます。
+```bash
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch vtc_bringup minimal_bridge.launch.py
+```
+
+現時点の `vtc_bridge_node` は mock transport を使って `odom`、`imu/data`、
+`gnss/fix`、`vtc/state`、`vtc/diagnostics`、`tf` を publish する scaffold です。
+まだ VTC 本体には接続しません。
+
+`transport_backend:=cageclient` は実装済みですが、build 時に以下が揃っている場合だけ
+有効になります。
+
+- `third_party/CageClient` に `CageClient` checkout がある
+- `libzmq3-dev` がインストールされている
+
+例:
+
+```bash
+git clone --recursive https://github.com/furo-org/CageClient.git third_party/CageClient
+sudo apt install libzmq3-dev
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch vtc_bringup minimal_bridge.launch.py transport_backend:=cageclient simulator_host:=192.168.1.110
+```
+
+実際の VTC 連携フローは引き続き以下を目標にします。
 
 1. Windows 側で VTC packaged binary を起動する
 2. Linux / ROS2 側で bridge を起動する

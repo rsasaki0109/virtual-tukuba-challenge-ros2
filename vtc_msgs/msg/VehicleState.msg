@@ -1,0 +1,16 @@
+builtin_interfaces/Time stamp
+string simulator_host
+string vehicle_name
+bool connected
+float64 sim_time
+float64 linear_velocity
+float64 angular_velocity
+float64 left_wheel_rpm
+float64 right_wheel_rpm
+geometry_msgs/Pose pose
+geometry_msgs/Vector3 linear_acceleration
+geometry_msgs/Vector3 angular_velocity_vector
+float64 latitude
+float64 longitude
+float64 altitude
+bool gnss_valid
