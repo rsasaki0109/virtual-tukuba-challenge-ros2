@@ -1,0 +1,18 @@
+vtc_bridge:
+  ros__parameters:
+    transport_backend: "mock"
+    simulator_host: "127.0.0.1"
+    vehicle_name: ""
+    cmd_vel_topic: "cmd_vel"
+    odom_topic: "odom"
+    imu_topic: "imu/data"
+    gnss_topic: "gnss/fix"
+    state_topic: "vtc/state"
+    diagnostics_topic: "vtc/diagnostics"
+    odom_frame_id: "odom"
+    base_frame_id: "base_link"
+    imu_frame_id: "imu_link"
+    lidar_frame_id: "lidar3d_link"
+    poll_rate_hz: 50.0
+    diagnostics_rate_hz: 1.0
+    status_log_period_ms: 10000

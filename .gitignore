@@ -1,6 +1,9 @@
 build/
 install/
 log/
+third_party/CageClient/
+third_party/libzmq3-dev/
+third_party/_packages/
 
 .DS_Store
 *.pyc

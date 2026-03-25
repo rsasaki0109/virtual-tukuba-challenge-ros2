@@ -1,0 +1,9 @@
+builtin_interfaces/Time stamp
+string transport_backend
+string simulator_host
+string vehicle_name
+bool connected
+uint64 commands_received
+uint64 state_updates
+float64 last_sim_time
+string last_error
